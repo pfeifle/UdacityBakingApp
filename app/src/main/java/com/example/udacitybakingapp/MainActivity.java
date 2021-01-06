@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         rv_mainActivity =findViewById(R.id.rv_mainActivity);
 
         Context context = rv_mainActivity.getContext();
-        String test[] = {"1","2","3","4","5"};
+        String test[] = {"Rezept 1","Rezept 2","Rezept 3","Rezept 4","Rezept 5"};
         AdapterMainActivity adapterMainActivity = new AdapterMainActivity(test);
         rv_mainActivity.setAdapter(adapterMainActivity);
 

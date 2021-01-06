@@ -18,18 +18,16 @@ public  class AdapterMainActivity extends RecyclerView.Adapter<AdapterMainActivi
      * (custom ViewHolder).
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView textView;
-
+        private final TextView tv_name;
+        private final TextView tv_servings;
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
-
-            textView = (TextView) view.findViewById(R.id.textView);
+            tv_name = (TextView) view.findViewById(R.id.id_main_item_name_tv);
+            tv_servings = (TextView) view.findViewById(R.id.id_main_item_servings_tv);
         }
 
-        public TextView getTextView() {
-            return textView;
-        }
+
     }
 
     /**
@@ -47,7 +45,7 @@ public  class AdapterMainActivity extends RecyclerView.Adapter<AdapterMainActivi
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.text_row_item, viewGroup, false);
+                .inflate(R.layout.activity_main_item, viewGroup, false);
 
         return new ViewHolder(view);
     }
@@ -58,7 +56,10 @@ public  class AdapterMainActivity extends RecyclerView.Adapter<AdapterMainActivi
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.getTextView().setText(localDataSet[position]);
+        viewHolder.tv_name.setText(localDataSet[position]);
+        viewHolder.tv_servings.setText("Servings x");
+
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -1,0 +1,40 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="300dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/activity_main_item_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:elevation="10dp"
+        android:backgroundTint="@android:color/white">
+        <RelativeLayout
+            android:id="@+id/recipe_rl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/generic_baking_image" />
+            <TextView
+                android:id="@+id/id_main_item_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_alignParentTop="true"
+                android:textColor="@android:color/black"
+                android:textSize="40dp"
+                android:layout_margin="5dp"/>
+            <TextView
+                android:id="@+id/id_main_item_servings_tv"
+                android:layout_alignParentBottom="true"
+                android:textColor="@android:color/black"
+                android:textSize="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</FrameLayout>
