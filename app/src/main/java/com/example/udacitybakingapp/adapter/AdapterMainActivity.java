@@ -8,10 +8,13 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.udacitybakingapp.R;
+import com.example.udacitybakingapp.recipe.CompleteRecipe;
+
+import java.util.List;
 
 public  class AdapterMainActivity extends RecyclerView.Adapter<AdapterMainActivity.ViewHolder> {
 
-    private String[] localDataSet;
+    private List<CompleteRecipe> localDataSet;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -36,7 +39,7 @@ public  class AdapterMainActivity extends RecyclerView.Adapter<AdapterMainActivi
      * @param dataSet String[] containing the data to populate views to be used
      * by RecyclerView.
      */
-    public AdapterMainActivity(String[] dataSet) {
+    public AdapterMainActivity(List<CompleteRecipe> dataSet) {
         localDataSet = dataSet;
     }
 
@@ -56,16 +59,14 @@ public  class AdapterMainActivity extends RecyclerView.Adapter<AdapterMainActivi
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.tv_name.setText(localDataSet[position]);
-        viewHolder.tv_servings.setText("Servings x");
-
-
+        viewHolder.tv_name.setText(localDataSet.get(position).name);
+        viewHolder.tv_servings.setText("Servings " + localDataSet.get(position).servings);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return localDataSet.length;
+        return localDataSet.size();
     }
 }
 
