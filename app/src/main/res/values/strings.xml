@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">UdacityBakingApp</string>
     <string name="ID_CompleteRecipe">ID_CompleteRecipe</string>
-
+    <string name="ID_Step">ID_Step</string>
+    <string name="ID_Steps">ID_Steps</string>
+    <string name="prev_step">previpus step</string>
+    <string name="next_step">next step</string>
+    <string name="create_widget">create widget</string>
 </resources>

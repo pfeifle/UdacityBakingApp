@@ -1,0 +1,51 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/videoPlayerView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+
+        />
+    <TextView
+        android:id="@+id/static_string1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_margin="5dp"
+        android:textStyle="bold"
+        android:text="Step Name:"
+        android:layout_below="@+id/videoPlayerView" />
+
+    <TextView
+        android:id="@+id/step_description_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_margin="5dp"
+        android:layout_below="@+id/static_string1" />
+    <TextView
+        android:id="@+id/static_string2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_margin="5dp"
+        android:textStyle="bold"
+        android:text="Step Description:"
+        android:layout_below="@+id/step_description_tv" />
+
+    <TextView
+                android:id="@+id/step_description_detail_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_margin="5dp"
+        android:layout_below="@+id/static_string2"  />
+
+</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

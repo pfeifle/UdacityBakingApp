@@ -30,7 +30,7 @@ public class DetailActivity extends AppCompatActivity {
         rv_ingredients.setNestedScrollingEnabled(false);
 
         rv_steps =findViewById(R.id.rv_steps);
-        AdapterDetailActivity4Steps adapterDetailActivity4Steps = new AdapterDetailActivity4Steps(completeRecipe.steps);
+        AdapterDetailActivity4Steps adapterDetailActivity4Steps = new AdapterDetailActivity4Steps(completeRecipe);
         rv_steps.setAdapter(adapterDetailActivity4Steps);
         rv_steps.setNestedScrollingEnabled(false);
 

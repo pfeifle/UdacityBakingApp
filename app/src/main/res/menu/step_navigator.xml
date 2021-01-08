@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/prev_step"
+        app:showAsAction="always"
+        android:title="@string/prev_step"/>
+
+    <item
+        android:id="@+id/next_step"
+        app:showAsAction="always"
+        android:title="@string/next_step"/>
+
+</menu>
