@@ -12,7 +12,7 @@ public class CompleteRecipe implements Parcelable {
     public String name;
     public int servings;
     public List<Ingredient> ingredients;
-    public List<RecipeStep> steps;
+    public List<Step> steps;
 
 
     protected CompleteRecipe(Parcel in) {
@@ -22,11 +22,17 @@ public class CompleteRecipe implements Parcelable {
         this.ingredients = new ArrayList<>();
         in.readTypedList(ingredients, Ingredient.CREATOR);
         this.steps = new ArrayList<>();
-        in.readTypedList(steps, RecipeStep.CREATOR);
+        in.readTypedList(steps, Step.CREATOR);
     }
+
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeInt(this.servings);
+        dest.writeTypedList(this.ingredients);
+        dest.writeTypedList(this.steps);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.example.udacitybakingapp;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         rv_mainActivity =findViewById(R.id.rv_mainActivity);
 
-        Context context = rv_mainActivity.getContext();
+//        Context context = rv_mainActivity.getContext();
 
         getAllRecipesFromInternet();
     }
@@ -38,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 .setEndpoint("https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/")
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
-        RecipeAPIService service = restAdapter.create(RecipeAPIService.class);
+        RecipesFromInternet service = restAdapter.create(RecipesFromInternet.class);
 
         service.getRecipes(new Callback<List<CompleteRecipe>>() {
             @Override

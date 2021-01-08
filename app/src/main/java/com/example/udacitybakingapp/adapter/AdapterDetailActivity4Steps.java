@@ -1,48 +1,36 @@
 package com.example.udacitybakingapp.adapter;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.udacitybakingapp.DetailActivity;
 import com.example.udacitybakingapp.R;
 import com.example.udacitybakingapp.recipe.CompleteRecipe;
+import com.example.udacitybakingapp.recipe.Step;
 
 import java.util.List;
 
-public  class AdapterMainActivity extends RecyclerView.Adapter<AdapterMainActivity.ViewHolder> {
+public  class AdapterDetailActivity4Steps extends RecyclerView.Adapter<AdapterDetailActivity4Steps.ViewHolder> {
 
-    private List<CompleteRecipe> localDataSet;
+    private List<Step> localDataSet;
 
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView tv_name;
-        private final TextView tv_servings;
+        private final TextView tv_step_name;
+
+
         protected CompleteRecipe completeRecipe;
 
         public ViewHolder(View view) {
             super(view);
-            // Define click listener for the ViewHolder's View
-            tv_name = (TextView) view.findViewById(R.id.id_main_item_name_tv);
-            tv_servings = (TextView) view.findViewById(R.id.id_main_item_servings_tv);
-
-            view.setOnClickListener(v -> {
-                Toast.makeText(view.getContext(),"Have fun baking " + completeRecipe.name +" :-)",Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(view.getContext(), DetailActivity.class);
-                intent.putExtra(view.getContext().getString(R.string.ID_CompleteRecipe), completeRecipe);
-                view.getContext().startActivity(intent);
-            });
+            tv_step_name = (TextView) view.findViewById(R.id.step_name_tv);
         }
-
-
     }
 
     /**
@@ -51,7 +39,7 @@ public  class AdapterMainActivity extends RecyclerView.Adapter<AdapterMainActivi
      * @param dataSet String[] containing the data to populate views to be used
      * by RecyclerView.
      */
-    public AdapterMainActivity(List<CompleteRecipe> dataSet) {
+    public AdapterDetailActivity4Steps(List<Step> dataSet) {
         localDataSet = dataSet;
     }
 
@@ -60,21 +48,16 @@ public  class AdapterMainActivity extends RecyclerView.Adapter<AdapterMainActivi
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.activity_main_item, viewGroup, false);
-
+                .inflate(R.layout.activity_detail_step_item, viewGroup, false);
         return new ViewHolder(view);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.tv_name.setText(localDataSet.get(position).name);
-        viewHolder.tv_servings.setText("Servings " + localDataSet.get(position).servings);
-        viewHolder.completeRecipe = localDataSet.get(position);
-
+        viewHolder.tv_step_name.setText(localDataSet.get(position).shortDescription);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
