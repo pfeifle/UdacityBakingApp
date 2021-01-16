@@ -9,7 +9,7 @@ import com.example.udacitybakingapp.adapter.AdapterDetailActivity4Ingredients;
 import com.example.udacitybakingapp.adapter.AdapterDetailActivity4Steps;
 import com.example.udacitybakingapp.recipe.CompleteRecipe;
 
-public class DetailActivityPhone extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity {
     public CompleteRecipe completeRecipe;
     public RecyclerView rv_ingredients;
     public RecyclerView rv_steps;
@@ -30,7 +30,7 @@ public class DetailActivityPhone extends AppCompatActivity {
 
 
         rv_steps =findViewById(R.id.rv_steps);
-        AdapterDetailActivity4Steps adapterDetailActivity4Steps = new AdapterDetailActivity4Steps(completeRecipe);
+        AdapterDetailActivity4Steps adapterDetailActivity4Steps = new AdapterDetailActivity4Steps(this,completeRecipe);
         rv_steps.setAdapter(adapterDetailActivity4Steps);
 
     }
