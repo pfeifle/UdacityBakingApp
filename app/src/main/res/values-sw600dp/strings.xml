@@ -6,8 +6,8 @@
     <string name="prev_step">previpus step</string>
     <string name="next_step">next step</string>
     <string name="create_widget">create widget</string>
-    <bool name="isTablet">false</bool>
+    <bool name="isTablet">true</bool>
     <string name="appwidget_text">Baking App</string>
-    <string name="add_widget">Add widget</string>
+
 
 </resources>

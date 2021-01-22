@@ -1,6 +1,8 @@
 package com.example.udacitybakingapp.adapter;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ public  class AdapterDetailActivity4Steps extends RecyclerView.Adapter<AdapterDe
 
     public  List<Step> localDataSet;
     public static CompleteRecipe completeRecipe;
+    public static boolean isTablet; // never used can be deleted after refactoring.
 
     /**
      * Provide a reference to the type of views that you are using
@@ -34,11 +37,14 @@ public  class AdapterDetailActivity4Steps extends RecyclerView.Adapter<AdapterDe
             tv_step_name = (TextView) view.findViewById(R.id.step_name_tv);
             view.setOnClickListener(v -> {
                 Toast.makeText(view.getContext(),"Have fun carrying out step " + step.shortDescription +" :-)",Toast.LENGTH_LONG).show();
+
                 Intent intent = new Intent(view.getContext(), VideoActivity.class);
                 intent.putExtra(view.getContext().getString(R.string.ID_Step), step);
                 intent.putExtra(view.getContext().getString(R.string.ID_CompleteRecipe), completeRecipe); // passed to enable forward and backward moving between steps
+
                 view.getContext().startActivity(intent);
             });
+            isTablet = DecideTablet(view);
         }
     }
 
@@ -48,7 +54,7 @@ public  class AdapterDetailActivity4Steps extends RecyclerView.Adapter<AdapterDe
      * @param dataSet String[] containing the data to populate views to be used
      * by RecyclerView.
      */
-    public AdapterDetailActivity4Steps(CompleteRecipe completeRecipe) {
+    public AdapterDetailActivity4Steps(Activity a, CompleteRecipe completeRecipe) {
         localDataSet = completeRecipe.steps;
         this.completeRecipe =completeRecipe;
     }
@@ -77,6 +83,22 @@ public  class AdapterDetailActivity4Steps extends RecyclerView.Adapter<AdapterDe
     @Override
     public int getItemCount() {
         return localDataSet.size();
+    }
+
+    /**
+     * Detects whether device is phone or table. returns true if tablet.
+     */
+    public static boolean DecideTablet(View view) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        view.getContext().getResources().getDisplayMetrics();
+        float yInches= metrics.heightPixels/metrics.ydpi;
+        float xInches= metrics.widthPixels/metrics.xdpi;
+        double diagonalInches = Math.sqrt(xInches*xInches + yInches*yInches);
+        if (diagonalInches>=6.5){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
 

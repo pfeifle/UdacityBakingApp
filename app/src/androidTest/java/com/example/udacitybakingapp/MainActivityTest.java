@@ -1,6 +1,7 @@
 package com.example.udacitybakingapp;
 
 
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -17,15 +18,21 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 @RunWith(AndroidJUnit4.class)
-public class DetailActivityTest {
+public class MainActivityTest {
 
     @Rule
-    public IntentsTestRule<DetailActivity> activityTestRule = new IntentsTestRule<>(DetailActivity.class);
+    public IntentsTestRule<MainActivity> activityTestRule = new IntentsTestRule<>(MainActivity.class);
 
     @Test
     public void whenRecyclerViewItemClickedThenOpenStepActivity() throws InterruptedException {
         Thread.sleep(SECONDS.toMillis(2));
-        onView(withId(R.id.rv_steps)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        intended(hasComponent(VideoActivity.class.getName()));
+        onView(withId(R.id.rv_mainActivity)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        if (ApplicationProvider.getApplicationContext().getResources().getBoolean(R.bool.isTablet)) {
+            intended(hasComponent(DetailTabletActivity.class.getName()));
+        }
+        else {
+            intended(hasComponent(DetailActivity.class.getName()));
+        }
+
     }
 }

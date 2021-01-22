@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.udacitybakingapp.DetailActivity;
+import com.example.udacitybakingapp.DetailTabletActivity;
 import com.example.udacitybakingapp.R;
 import com.example.udacitybakingapp.recipe.CompleteRecipe;
 
@@ -27,18 +28,31 @@ public  class AdapterMainActivity extends RecyclerView.Adapter<AdapterMainActivi
         private final TextView tv_name;
         private final TextView tv_servings;
         protected CompleteRecipe completeRecipe;
+        public boolean isTablet;
 
         public ViewHolder(View view) {
+
             super(view);
             // Define click listener for the ViewHolder's View
             tv_name = (TextView) view.findViewById(R.id.id_main_item_name_tv);
             tv_servings = (TextView) view.findViewById(R.id.id_main_item_servings_tv);
+            isTablet = view.getContext().getResources().getBoolean(R.bool.isTablet);
 
             view.setOnClickListener(v -> {
-                Toast.makeText(view.getContext(),"Have fun baking " + completeRecipe.name +" :-)",Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(view.getContext(), DetailActivity.class);
-                intent.putExtra(view.getContext().getString(R.string.ID_CompleteRecipe), completeRecipe);
-                view.getContext().startActivity(intent);
+       //         Toast.makeText(view.getContext(),"Have fun baking " + completeRecipe.name +" :-)",Toast.LENGTH_LONG).show();
+                if (!isTablet) {
+                    Intent intent = new Intent(view.getContext(), DetailActivity.class);
+                    intent.putExtra(view.getContext().getString(R.string.ID_CompleteRecipe), completeRecipe);
+                    view.getContext().startActivity(intent);
+                }
+                else {
+                    Toast.makeText(view.getContext(),"Tablet",Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(view.getContext(), DetailTabletActivity.class);
+                    intent.putExtra(view.getContext().getString(R.string.ID_CompleteRecipe), completeRecipe);
+                    view.getContext().startActivity(intent);
+
+                }
+
             });
         }
 

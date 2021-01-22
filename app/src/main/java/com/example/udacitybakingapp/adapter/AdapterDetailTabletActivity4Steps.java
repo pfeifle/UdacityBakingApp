@@ -1,8 +1,6 @@
 package com.example.udacitybakingapp.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,51 +10,53 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.udacitybakingapp.R;
-import com.example.udacitybakingapp.VideoActivity;
+import com.example.udacitybakingapp.VideoTablet;
 import com.example.udacitybakingapp.recipe.CompleteRecipe;
 import com.example.udacitybakingapp.recipe.Step;
 
 import java.util.List;
 
-public  class AdapterDetailActivity4Steps extends RecyclerView.Adapter<AdapterDetailActivity4Steps.ViewHolder> {
+public  class AdapterDetailTabletActivity4Steps extends RecyclerView.Adapter<AdapterDetailTabletActivity4Steps.ViewHolder> {
 
     public  List<Step> localDataSet;
     public static CompleteRecipe completeRecipe;
     public static boolean isTablet;
-
+    public static VideoTablet videoTablet;
+    public Activity activity;
+    public static TextView tv_step_name;
+    public static Step step;
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView tv_step_name;
+
         private Step step;
 
-        public ViewHolder(View view) {
+        public ViewHolder(View view,Activity activity) {
             super(view);
             tv_step_name = (TextView) view.findViewById(R.id.step_name_tv);
             view.setOnClickListener(v -> {
                 Toast.makeText(view.getContext(),"Have fun carrying out step " + step.shortDescription +" :-)",Toast.LENGTH_LONG).show();
+                AdapterDetailTabletActivity4Steps.step=step;
+                videoTablet = new VideoTablet(activity, step);
+                videoTablet.description_detail_tv.setText(step.description);
+                videoTablet.description_tv.setText(step.shortDescription);
+                AdapterDetailTabletActivity4Steps.step =step;
+                videoTablet.completeRecipe =completeRecipe;
+                videoTablet.onResume();
 
-                Intent intent = new Intent(view.getContext(), VideoActivity.class);
-                intent.putExtra(view.getContext().getString(R.string.ID_Step), step);
-                intent.putExtra(view.getContext().getString(R.string.ID_CompleteRecipe), completeRecipe); // passed to enable forward and backward moving between steps
 
-                view.getContext().startActivity(intent);
             });
-            isTablet = DecideTablet(view);
         }
     }
 
-    /**
-     * Initialize the dataset of the Adapter.
-     *
-     * @param dataSet String[] containing the data to populate views to be used
-     * by RecyclerView.
-     */
-    public AdapterDetailActivity4Steps(Activity a, CompleteRecipe completeRecipe) {
+
+    public AdapterDetailTabletActivity4Steps(Activity a, CompleteRecipe completeRecipe) {
         localDataSet = completeRecipe.steps;
         this.completeRecipe =completeRecipe;
+        this.activity =a;
+
     }
 
     // Create new views (invoked by the layout manager)
@@ -65,7 +65,7 @@ public  class AdapterDetailActivity4Steps extends RecyclerView.Adapter<AdapterDe
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.activity_detail_step_item, viewGroup, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view,activity);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -73,8 +73,9 @@ public  class AdapterDetailActivity4Steps extends RecyclerView.Adapter<AdapterDe
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.tv_step_name.setText(localDataSet.get(position).shortDescription);
-
+        tv_step_name.setText(localDataSet.get(position).shortDescription);
+        //videoTablet.description_detail_tv.setText(localDataSet.get(position).description);
+        //videoTablet.description_tv.setText(localDataSet.get(position).shortDescription);
         viewHolder.step = localDataSet.get(position);
 
     }
@@ -85,21 +86,10 @@ public  class AdapterDetailActivity4Steps extends RecyclerView.Adapter<AdapterDe
         return localDataSet.size();
     }
 
-    /**
-     * Detects whether device is phone or table. returns true if tablet.
-     */
-    public static boolean DecideTablet(View view) {
-        DisplayMetrics metrics = new DisplayMetrics();
-        view.getContext().getResources().getDisplayMetrics();
-        float yInches= metrics.heightPixels/metrics.ydpi;
-        float xInches= metrics.widthPixels/metrics.xdpi;
-        double diagonalInches = Math.sqrt(xInches*xInches + yInches*yInches);
-        if (diagonalInches>=6.5){
-            return true;
-        }else{
-            return false;
-        }
-    }
+
+
+
+
 }
 
 
