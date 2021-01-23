@@ -25,6 +25,9 @@ public  class AdapterDetailTabletActivity4Steps extends RecyclerView.Adapter<Ada
     public Activity activity;
     public static TextView tv_step_name;
     public static Step step;
+    public static int position_in_view_holder;
+    public static long position;
+
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
@@ -44,18 +47,28 @@ public  class AdapterDetailTabletActivity4Steps extends RecyclerView.Adapter<Ada
                 videoTablet.description_tv.setText(step.shortDescription);
                 AdapterDetailTabletActivity4Steps.step =step;
                 videoTablet.completeRecipe =completeRecipe;
+                videoTablet.position =AdapterDetailTabletActivity4Steps.position;
                 videoTablet.onResume();
-
-
             });
+
         }
     }
 
+    public void recover(long position){
+        videoTablet = new VideoTablet(activity, step);
+        videoTablet.description_detail_tv.setText(step.description);
+        videoTablet.description_tv.setText(step.shortDescription);
+        videoTablet.completeRecipe =completeRecipe;
+        videoTablet.position=position;
+        videoTablet.onResume();
+    }
 
-    public AdapterDetailTabletActivity4Steps(Activity a, CompleteRecipe completeRecipe, Step step) {
+    public AdapterDetailTabletActivity4Steps(Activity a, CompleteRecipe completeRecipe, int position_in_view_holder,long position, Step step) {
         localDataSet = completeRecipe.steps;
         this.completeRecipe =completeRecipe;
         this.activity =a;
+        this.position_in_view_holder=position_in_view_holder;
+        this.position=position;
         this.step =step;
 
     }

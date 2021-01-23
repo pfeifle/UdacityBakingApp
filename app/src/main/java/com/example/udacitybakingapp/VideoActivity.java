@@ -67,6 +67,7 @@ public class VideoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
+        position=0;
         //TODO
         if (item.getItemId()==R.id.prev_step) {
             if (step.id> 0)

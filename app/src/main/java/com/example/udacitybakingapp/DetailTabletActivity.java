@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.udacitybakingapp.adapter.AdapterDetailActivity4Ingredients;
 import com.example.udacitybakingapp.adapter.AdapterDetailTabletActivity4Steps;
 import com.example.udacitybakingapp.recipe.CompleteRecipe;
+import com.example.udacitybakingapp.recipe.Step;
 import com.google.gson.Gson;
 
 public class DetailTabletActivity extends AppCompatActivity {
@@ -23,6 +24,9 @@ public class DetailTabletActivity extends AppCompatActivity {
     public RecyclerView rv_ingredients;
     public RecyclerView rv_steps;
     AdapterDetailTabletActivity4Steps adapterDetailTabletActivity4Steps;
+    public int position_in_view_holder;
+    public Step step;
+    public long position=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +37,12 @@ public class DetailTabletActivity extends AppCompatActivity {
             AdapterDetailTabletActivity4Steps.videoTablet.myMediaPlayer.position = savedInstanceState.getLong("position");
             AdapterDetailTabletActivity4Steps.step =savedInstanceState.getParcelable("step");
             completeRecipe = savedInstanceState.getParcelable("completeRecipe");
+            position_in_view_holder =savedInstanceState.getInt("positionInViewHolder");
+            position =savedInstanceState.getLong("position");
+            step =savedInstanceState.getParcelable("step");
         } else if (data != null) {
             completeRecipe = data.getParcelable(getString(R.string.ID_CompleteRecipe));
+            position_in_view_holder=0;
         }
 
 
@@ -46,7 +54,7 @@ public class DetailTabletActivity extends AppCompatActivity {
 
 
         rv_steps =findViewById(R.id.rv_steps);
-        adapterDetailTabletActivity4Steps = new AdapterDetailTabletActivity4Steps(this,completeRecipe,AdapterDetailTabletActivity4Steps.step );
+        adapterDetailTabletActivity4Steps = new AdapterDetailTabletActivity4Steps(this,completeRecipe,position_in_view_holder,position,step);
         rv_steps.setAdapter(adapterDetailTabletActivity4Steps);
     }
 
@@ -60,16 +68,20 @@ public class DetailTabletActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if (adapterDetailTabletActivity4Steps.videoTablet!=null)
-        adapterDetailTabletActivity4Steps.videoTablet.onResume();
-
+        if (adapterDetailTabletActivity4Steps.videoTablet!=null) {
+            adapterDetailTabletActivity4Steps.recover(position);
+            adapterDetailTabletActivity4Steps.videoTablet.onResume();
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (adapterDetailTabletActivity4Steps.videoTablet!=null)
-        adapterDetailTabletActivity4Steps.videoTablet.onPause();
+        if (adapterDetailTabletActivity4Steps.videoTablet!=null) {
+            adapterDetailTabletActivity4Steps.videoTablet.onPause();
+            if (adapterDetailTabletActivity4Steps.videoTablet.myMediaPlayer!=null)
+                position = adapterDetailTabletActivity4Steps.videoTablet.myMediaPlayer.position;
+        }
     }
 
     @Override
@@ -84,6 +96,9 @@ public class DetailTabletActivity extends AppCompatActivity {
         outState.putParcelable("step", (AdapterDetailTabletActivity4Steps.step));
         outState.putLong("position", AdapterDetailTabletActivity4Steps.videoTablet.myMediaPlayer.position);
         outState.putParcelable("completeRecipe", completeRecipe);
+        outState.putInt("positionInViewHolder", position_in_view_holder);
+        outState.putLong("position", position);
+        outState.putParcelable("step",adapterDetailTabletActivity4Steps.step );
         super.onSaveInstanceState(outState);
     }
 
@@ -92,8 +107,10 @@ public class DetailTabletActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
+
         //TODO
         if (item.getItemId()==R.id.prev_step) {
+            adapterDetailTabletActivity4Steps.videoTablet.position =0;
             if (adapterDetailTabletActivity4Steps.step.id> 0)
                 adapterDetailTabletActivity4Steps.step = completeRecipe.steps.get(--adapterDetailTabletActivity4Steps.step.id);
             else
@@ -105,6 +122,7 @@ public class DetailTabletActivity extends AppCompatActivity {
             onResume();
         }
         else if (item.getItemId()==R.id.next_step){
+            adapterDetailTabletActivity4Steps.videoTablet.position =0;
             if (adapterDetailTabletActivity4Steps.step.id <completeRecipe.steps.size()-1)
                 adapterDetailTabletActivity4Steps.step = completeRecipe.steps.get(++adapterDetailTabletActivity4Steps.step.id);
             else
