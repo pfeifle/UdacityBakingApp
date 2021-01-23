@@ -2,6 +2,7 @@ package com.example.udacitybakingapp;
 
 import android.app.Activity;
 import android.support.v4.media.session.MediaSessionCompat;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.udacitybakingapp.adapter.AdapterDetailTabletActivity4Steps;
@@ -44,6 +45,17 @@ public class VideoTablet {
     public void onResume() {
         if (AdapterDetailTabletActivity4Steps.step!=null)
             myMediaPlayer.initializePlayer(AdapterDetailTabletActivity4Steps.step.videoURL);
+
+        if (AdapterDetailTabletActivity4Steps.step.videoURL.length() > 0) {
+            activity.findViewById(R.id.video_iv).setVisibility(View.INVISIBLE);
+            activity.findViewById(R.id.videoPlayerView).setVisibility(View.VISIBLE);
+            myMediaPlayer.initializePlayer(AdapterDetailTabletActivity4Steps.step.videoURL);
+        } else {
+            activity.findViewById(R.id.video_iv).setVisibility(View.VISIBLE);
+            activity.findViewById(R.id.videoPlayerView).setVisibility(View.INVISIBLE);
+        }
+
+
     }
 
     public void onPause() {

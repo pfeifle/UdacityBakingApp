@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,9 +90,15 @@ public class VideoActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        myMediaPlayer.initializePlayer(step.videoURL);
+        if (step.videoURL.length() > 0) {
+            findViewById(R.id.video_iv).setVisibility(View.INVISIBLE);
+            findViewById(R.id.videoPlayerView).setVisibility(View.VISIBLE);
+            myMediaPlayer.initializePlayer(step.videoURL);
+        } else {
+            findViewById(R.id.video_iv).setVisibility(View.VISIBLE);
+            findViewById(R.id.videoPlayerView).setVisibility(View.INVISIBLE);
+        }
     }
-
     @Override
     public void onPause() {
         super.onPause();
