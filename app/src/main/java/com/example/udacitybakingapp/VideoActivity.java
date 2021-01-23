@@ -24,6 +24,7 @@ public class VideoActivity extends AppCompatActivity {
     public Step step = null;
     public  TextView description_tv;
     public TextView description_detail_tv;
+    public long position=0;
 
 
     @Override
@@ -31,12 +32,18 @@ public class VideoActivity extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video_phone);
         Bundle data = getIntent().getExtras();
-        if (data != null) {
+        if (savedInstanceState != null) {
+            position = savedInstanceState.getLong("position");
+            step =savedInstanceState.getParcelable("step");
+            completeRecipe = savedInstanceState.getParcelable("completeRecipe");
+        } else if (data != null) {
             step = data.getParcelable(getString(R.string.ID_Step));
             completeRecipe = data.getParcelable(getString(R.string.ID_CompleteRecipe));
         }
+
+        setContentView(R.layout.activity_video_phone);
+
 
         description_tv = findViewById(R.id.step_description_tv);
         if (step != null)
@@ -48,7 +55,8 @@ public class VideoActivity extends AppCompatActivity {
 
         playerView = findViewById(R.id.videoPlayerView);
 
-        myMediaPlayer = new MediaPlayer (playerView, step.videoURL, this);
+        myMediaPlayer = new MediaPlayer (playerView, step.videoURL, this,position);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -94,10 +102,12 @@ public class VideoActivity extends AppCompatActivity {
             findViewById(R.id.video_iv).setVisibility(View.INVISIBLE);
             findViewById(R.id.videoPlayerView).setVisibility(View.VISIBLE);
             myMediaPlayer.initializePlayer(step.videoURL);
+            myMediaPlayer.exoPlayer.seekTo(position);
         } else {
             findViewById(R.id.video_iv).setVisibility(View.VISIBLE);
             findViewById(R.id.videoPlayerView).setVisibility(View.INVISIBLE);
         }
+
     }
     @Override
     public void onPause() {
@@ -107,6 +117,7 @@ public class VideoActivity extends AppCompatActivity {
             myMediaPlayer.position = myMediaPlayer.exoPlayer.getCurrentPosition();
             myMediaPlayer.exoPlayer.stop();
             myMediaPlayer.exoPlayer.release();
+            position = myMediaPlayer.exoPlayer.getCurrentPosition();
             myMediaPlayer.exoPlayer = null;
         }
     }
@@ -126,6 +137,11 @@ public class VideoActivity extends AppCompatActivity {
             myMediaPlayer.exoPlayer = null;
         }
     }
-
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable("step", step);
+        outState.putLong("position", myMediaPlayer.position);
+        outState.putParcelable("completeRecipe", completeRecipe);
+        super.onSaveInstanceState(outState);
+    }
 
 }

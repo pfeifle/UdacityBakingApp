@@ -21,6 +21,7 @@ public class VideoTablet {
     public  TextView description_tv;
     public TextView description_detail_tv;
     public Activity activity;
+    public long position=0;
 
 
     public VideoTablet(Activity activity,Step step) {
@@ -35,7 +36,7 @@ public class VideoTablet {
             description_detail_tv.setText(step.description);
         playerView = activity.findViewById(R.id.videoPlayerView);
         if (step !=null)
-            myMediaPlayer = new MediaPlayer (playerView, step.videoURL, activity);
+            myMediaPlayer = new MediaPlayer (playerView, step.videoURL, activity,position);
 
     }
 
@@ -50,13 +51,14 @@ public class VideoTablet {
             activity.findViewById(R.id.video_iv).setVisibility(View.INVISIBLE);
             activity.findViewById(R.id.videoPlayerView).setVisibility(View.VISIBLE);
             myMediaPlayer.initializePlayer(AdapterDetailTabletActivity4Steps.step.videoURL);
+            myMediaPlayer.exoPlayer.seekTo(position);
         } else {
             activity.findViewById(R.id.video_iv).setVisibility(View.VISIBLE);
             activity.findViewById(R.id.videoPlayerView).setVisibility(View.INVISIBLE);
         }
-
-
     }
+
+
 
     public void onPause() {
         if (myMediaPlayer !=null)
@@ -65,9 +67,11 @@ public class VideoTablet {
             myMediaPlayer.position = myMediaPlayer.exoPlayer.getCurrentPosition();
             myMediaPlayer.exoPlayer.stop();
             myMediaPlayer.exoPlayer.release();
+            position = myMediaPlayer.exoPlayer.getCurrentPosition();
             myMediaPlayer.exoPlayer = null;
         }
     }
+
 
     public void onDestroy() {
 
@@ -84,6 +88,7 @@ public class VideoTablet {
             myMediaPlayer.exoPlayer = null;
         }
     }
+
 
 
 }

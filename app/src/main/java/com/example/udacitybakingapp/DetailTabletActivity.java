@@ -28,9 +28,15 @@ public class DetailTabletActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle data = getIntent().getExtras();
-        if (data != null) {
+
+        if (savedInstanceState != null) {
+            AdapterDetailTabletActivity4Steps.videoTablet.myMediaPlayer.position = savedInstanceState.getLong("position");
+            AdapterDetailTabletActivity4Steps.step =savedInstanceState.getParcelable("step");
+            completeRecipe = savedInstanceState.getParcelable("completeRecipe");
+        } else if (data != null) {
             completeRecipe = data.getParcelable(getString(R.string.ID_CompleteRecipe));
         }
+
 
         setContentView(R.layout.activity_detail);
 
@@ -40,7 +46,7 @@ public class DetailTabletActivity extends AppCompatActivity {
 
 
         rv_steps =findViewById(R.id.rv_steps);
-        adapterDetailTabletActivity4Steps = new AdapterDetailTabletActivity4Steps(this,completeRecipe);
+        adapterDetailTabletActivity4Steps = new AdapterDetailTabletActivity4Steps(this,completeRecipe,AdapterDetailTabletActivity4Steps.step );
         rv_steps.setAdapter(adapterDetailTabletActivity4Steps);
     }
 
@@ -72,6 +78,16 @@ public class DetailTabletActivity extends AppCompatActivity {
         if (adapterDetailTabletActivity4Steps.videoTablet!=null)
         adapterDetailTabletActivity4Steps.videoTablet.onDestroy();
     }
+
+
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable("step", (AdapterDetailTabletActivity4Steps.step));
+        outState.putLong("position", AdapterDetailTabletActivity4Steps.videoTablet.myMediaPlayer.position);
+        outState.putParcelable("completeRecipe", completeRecipe);
+        super.onSaveInstanceState(outState);
+    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

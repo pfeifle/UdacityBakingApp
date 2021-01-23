@@ -52,10 +52,11 @@ public  class AdapterDetailTabletActivity4Steps extends RecyclerView.Adapter<Ada
     }
 
 
-    public AdapterDetailTabletActivity4Steps(Activity a, CompleteRecipe completeRecipe) {
+    public AdapterDetailTabletActivity4Steps(Activity a, CompleteRecipe completeRecipe, Step step) {
         localDataSet = completeRecipe.steps;
         this.completeRecipe =completeRecipe;
         this.activity =a;
+        this.step =step;
 
     }
 

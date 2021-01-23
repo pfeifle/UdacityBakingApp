@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 
-import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
@@ -28,11 +27,12 @@ public class MediaPlayer {
 
 
 
-    MediaPlayer (PlayerView player, String videoURL, Activity a) {
+    MediaPlayer (PlayerView player, String videoURL, Activity a, long position) {
         callingActivity =a;
         playerView =player;
         this.videoURL =videoURL;
         initializePlayer(videoURL);
+        this.position=position;
 
     }
 
@@ -65,7 +65,7 @@ public class MediaPlayer {
                 MediaSource mediaSource = new ExtractorMediaSource(Uri.parse(videoURL),
                         new DefaultDataSourceFactory(Objects.requireNonNull(callingActivity.getApplicationContext()), user),
                         new DefaultExtractorsFactory(), null, null);
-                if (position != C.TIME_UNSET) exoPlayer.seekTo(position);
+                exoPlayer.seekTo(position);
                 exoPlayer.prepare(mediaSource);
                 exoPlayer.setPlayWhenReady(playingPossible);
             }
